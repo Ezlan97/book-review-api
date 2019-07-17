@@ -10,6 +10,11 @@ class BookController extends Controller
     use App\Book;
     use App\Http\Resources\BookResource;
 
+    public function __construct()
+    {
+      $this->middleware('auth:api')->except(['index', 'show']);
+    }
+
     public function index()
     {
       return BookResource::collection(Book::with('ratings')->paginate(25));
